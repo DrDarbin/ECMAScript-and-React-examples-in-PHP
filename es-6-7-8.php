@@ -122,6 +122,77 @@
 	var arr = ["x","y","z"];
 	var [,,d] = arr;
 	console.log(d);	// z
+	console.log('---------');
+/**
+ * DESCTRUCTION FROM ARRAY
+ **/
+	var [,,x] = ['a', 'b', 'c'];
+	console.log(x);	// c
+
+/**
+ * RESCTRUCTION FROM ARRAY
+ **/
+	var x = 1;
+	var y = 2;
+	var z = {x, y};
+	console.log(z);
+	
+	var print = function() {
+		console.log(`Property 1 is ${this.x}, property 2 is ${this.y}`);
+	};
+	var s = {x, y, print};
+	s.print();
+
+/**
+ * ОПЕРАТОР РАСПРОСТРАНЕНИЯ ...
+ * Can b used for arrays and objects
+ **/
+	var peaks = ['a', 'b', 'c'];
+	var [last] = [...peaks].reverse();	// creates a copy of the array
+	console.log(last);
+	console.log(peaks.join(','));	// the array remained unchenged
+
+	var [first, ...rest] = peaks;
+	console.log(rest.join(','));	// rest of the elemets
+
+/**
+ * PROMISES
+ * https://learn.javascript.ru/promise
+ **/
+	var p = new Promise(function(resolve,reject){
+		//... asynch code here
+		//throw new Error('Promise error');
+	});
+	//p.catch(alert);
+
+	/*var promise = new Promise((resolve, reject) => {
+
+		setTimeout(() => {
+			reject(new Error("время вышло!"));
+		}, 1000);
+
+	});
+
+	promise
+		.then(
+			result => alert("Fulfilled: " + result),
+			error => alert("Rejected: " + error.message) // Rejected: время вышло!
+		);*/
+	
+	// chaining
+	/*httpGet(...)
+		.then(...)
+		.then(...)
+		.then(...)
+		.catch(error => {
+			alert(error); // Error: Not Found
+		});
+	*/
+	/*
+	1. Функция в первом then возвращает «обычное» значение user. Это значит, что then возвратит промис в состоянии «выполнен» с user в качестве результата. Он станет аргументом в следующем then.
+	2. Функция во втором then возвращает промис (результат нового вызова httpGet). Когда он будет завершён (может пройти какое-то время), то будет вызван следующий then с его результатом.
+	3. Третий then ничего не возвращает.*/
+
 </script>
 
 </body>

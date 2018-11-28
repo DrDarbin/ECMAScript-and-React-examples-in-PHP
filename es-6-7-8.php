@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>React tests</title>
+	<title>ES tests</title>
 </head>
 <body>
 
@@ -106,7 +106,7 @@
 		x2: "Ann"
 	}
 	var {x2} = x;
-	console.log(x2);
+	//console.log(x2);
 	
 	lordify = (z) => {
 		console.log(`${z.x1} is a lord`);
@@ -121,13 +121,13 @@
 	// destruction in array
 	var arr = ["x","y","z"];
 	var [,,d] = arr;
-	console.log(d);	// z
-	console.log('---------');
+	//console.log(d);	// z
+	//console.log('---------');
 /**
  * DESCTRUCTION FROM ARRAY
  **/
 	var [,,x] = ['a', 'b', 'c'];
-	console.log(x);	// c
+	//console.log(x);	// c
 
 /**
  * RESCTRUCTION FROM ARRAY
@@ -135,13 +135,13 @@
 	var x = 1;
 	var y = 2;
 	var z = {x, y};
-	console.log(z);
+	//console.log(z);
 	
 	var print = function() {
-		console.log(`Property 1 is ${this.x}, property 2 is ${this.y}`);
+		//console.log(`Property 1 is ${this.x}, property 2 is ${this.y}`);
 	};
 	var s = {x, y, print};
-	s.print();
+	//s.print();
 
 /**
  * ОПЕРАТОР РАСПРОСТРАНЕНИЯ ...
@@ -149,11 +149,11 @@
  **/
 	var peaks = ['a', 'b', 'c'];
 	var [last] = [...peaks].reverse();	// creates a copy of the array
-	console.log(last);
-	console.log(peaks.join(','));	// the array remained unchenged
+	//console.log(last);
+	//console.log(peaks.join(','));	// the array remained unchenged
 
 	var [first, ...rest] = peaks;
-	console.log(rest.join(','));	// rest of the elemets
+	//console.log(rest.join(','));	// rest of the elemets
 
 /**
  * PROMISES
@@ -192,6 +192,155 @@
 	1. Функция в первом then возвращает «обычное» значение user. Это значит, что then возвратит промис в состоянии «выполнен» с user в качестве результата. Он станет аргументом в следующем then.
 	2. Функция во втором then возвращает промис (результат нового вызова httpGet). Когда он будет завершён (может пройти какое-то время), то будет вызван следующий then с его результатом.
 	3. Третий then ничего не возвращает.*/
+	//console.log('--------');
+
+/**
+ * CLASSES
+ **/
+	class Test {
+		constructor(prop1, prop2) {
+			this.p1 = prop1
+			this.p2 = prop2
+		}
+		
+		print() {
+			console.log(`Proprties of this class are: ${this.p1} and ${this.p2}`)
+		}
+	}
+	const t = new Test('x1', 'x2')
+	t.print()
+
+	class Test2 extends Test {
+		constructor(prop1, prop2, prop3){
+			super(prop1, prop2)
+			this.p3 = prop3
+		}
+		print(){
+			super.print()
+			console.log(`Test 2 uses additional ${this.p3} property`);
+		}
+	}
+	const t2 = new Test2('y1','y2', 'y3')
+	t2.print()
+
+/**
+ * MODULES: EXPORT/IMPORT
+ * This feature is only just beginning to be implemented in browsers natively at this time. It is implemented in many transpilers, such as * * * TypeScript and Babel, and bundlers such as Rollup and Webpack.
+ *  See test-module.js for export function examples
+ **/
+	//import {print, log} from 'test-module.js'
+
+	// test-module.js (for export)
+	// export const print(message) => log(y1, new Date())
+	// export const log(x1, x2){
+	//	console.log(`Message: ${x1}; Date: ${x2.toString()}`)
+	// }
+
+	// CommonJS (for Node.js)
+	// const {log, print1} = require('test-module.js') // for import
+
+	// module.exports = {print, log} // for export
+
+/**
+ * FUNCTIONAL PROGRAMING
+ * concat
+ **/
+	// Creating a copy of an object
+	//Object.assign()
+	
+	// array joining. The function creates a copy of an array and adds new values to it
+	//Array.concat({})
+
+	let a = [{x: "1"}, {x: "2"}, {x: "3"}]
+	//console.log(a)
+	const addX = (y, arr) => arr.concat({y})
+	b = addX("4", a)
+	//console.log("initial array a: " + a)
+	//console.log("new array: " + b)
+	//console.log(b)
+
+	const addX2 = (z, arr2) => [...arr2, {z}]
+	c = addX("5", b)
+	//console.log(c)
+	console.log("-----------")
+
+	// Pure functions rules: 
+	// 1. get args
+	// 2. return values or functions
+	// 3. don't make changes in the outer world
+
+/**
+ * FILTER, MAP
+ **/
+	const schools = ["Omaha", "Warton", "Wolis"]
+	// console.log(schools.join(" | "))
+	// check if the first letter of each element is W
+	const wschools = schools.filter(string => string[0] === "W")
+	//console.log(wschools)
+	
+	// Delete array elements with "filter" function, since it doesn't change the initial array (don't us pop, splice etc.)
+	const cutSchools = (cut, list) => list.filter( school => school !== cut)
+	//console.log(cutSchools("Warton", schools))
+
+	const nameSchools = list => list.map(school => `${school} High School`)
+	const objSchools = list => list.map(school => `{name: ${school} High School`)
+	const objSchools2 = schools.map(school => ({name: school}))
+	//console.log(nameSchools(schools))
+	//console.log(objSchools(schools))
+	//console.log(objSchools2)
+
+	const editName = (oldName, name, arr) => 
+		arr.map (item => (item.name === oldName) ? ({...item, name}) : item
+		)
+	const schoolsEdited = editName("Omaha", "New Name", objSchools2)
+	//console.log(schoolsEdited)
+	//console.log(objSchools2)
+
+/**
+ * REDUCE
+ **/
+	const ages = [21, 35, 18, 89, 34, 23, 20]
+	const maxAge = ages.reduce(
+			(max, value) => {
+				console.log(`${max} > ${value} = ${max > value}`);
+				if(max > value) {
+					return max
+				}
+				else {
+					return value
+				}
+				// we need to delete console.log to use short form:
+				//(max > value) ? max : value;
+			}, 0
+		)
+	console.log(maxAge)
+/**
+ * REDUCE RIGHT - reduce an array from the end
+ **/
+
+/**
+ * HIGHER-ORDER FUNCTIONS
+	is a function that does at least one of the following:
+		- takes one or more functions as arguments (i.e. procedural parameters),
+r		- eturns a function as its result.
+ **/
+
+	// option 1
+	const function2 = function1 => function1("pass function as argument")
+	function2(arg => console.log(arg))
+	
+	// option 2
+	const f2 = f1 => arg => f1(arg + "!")
+	f3 = f2(msg => console.log(msg))
+	f3("test 3")
+/**
+ * RECURSION
+ **/
+	/*const countdown = (value, fn) => {
+		fn(value)
+		return (value > 0) ? countdown(value-1, fn) : value
+	}
+	countdown(10, value => console.log(value))*/
 
 </script>
 

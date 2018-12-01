@@ -144,8 +144,9 @@
 	//s.print();
 
 /**
- * ОПЕРАТОР РАСПРОСТРАНЕНИЯ ...
- * Can b used for arrays and objects
+ * SPREAD OPERATOR (...) (ОПЕРАТОР РАСПРОСТРАНЕНИЯ) ...
+ * Can be used for arrays and objects
+ * creates copy or do similar to implode (PHP) action
  **/
 	var peaks = ['a', 'b', 'c'];
 	var [last] = [...peaks].reverse();	// creates a copy of the array
@@ -262,7 +263,6 @@
 	const addX2 = (z, arr2) => [...arr2, {z}]
 	c = addX("5", b)
 	//console.log(c)
-	console.log("-----------")
 
 	// Pure functions rules: 
 	// 1. get args
@@ -298,11 +298,29 @@
 
 /**
  * REDUCE
+ * implements actions for each element in array, reducing it
+ * The reduce() method executes a reducer function (that you provide) on each member of the array resulting in a single output value.
+ * Your reducer function's returned value is assigned to the accumulator, whose value is remembered across each iteration throughout the array and ultimately becomes the final, single resulting value.
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
  **/
+	
+	// DEMO 1
+	const array1 = [1, 2, 3, 4];
+	const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+	// 1 + 2 + 3 + 4
+	console.log(array1.reduce(reducer));
+	// expected output: 10
+
+	// 5 + 1 + 2 + 3 + 4
+	console.log(array1.reduce(reducer, 5));
+	// expected output: 15
+	
+	// DEMO 2
 	const ages = [21, 35, 18, 89, 34, 23, 20]
 	const maxAge = ages.reduce(
 			(max, value) => {
-				console.log(`${max} > ${value} = ${max > value}`);
+				//console.log(`${max} > ${value} = ${max > value}`);
 				if(max > value) {
 					return max
 				}
@@ -313,7 +331,7 @@
 				//(max > value) ? max : value;
 			}, 0
 		)
-	console.log(maxAge)
+	//console.log(maxAge)
 /**
  * REDUCE RIGHT - reduce an array from the end
  **/
@@ -342,6 +360,56 @@ r		- eturns a function as its result.
 	}
 	countdown(10, value => console.log(value))*/
 
+	console.log('------------')
+
+/**
+ * COMPOSE FUNCTIONS
+ * similar to f1.f2.f3 or f1(f2(f3))
+ * http://functionaljs.com/functions/compose/
+ * better to install functional.js
+ **/
+
+	// this trik with spread operator ...fns (terrate through the functions) can be done with functions only
+	// composed - is a returned value on each iterration
+	// the first iterration returns arg as a f
+	// (composed, f) => f(composed) is a reducer arrow function used in reduce
+	const compose = (...fns) =>
+		(arg) =>
+			fns.reduce(
+				(composed, f) => f(composed),
+				arg
+			)
+	
+	const ff1 = a => a + 1
+	const ff2 = b => b + 2
+	const ff3 = c => c + 100
+	const ff4 = e => console.log(e)
+	
+	//similar to
+	//ff4(ff3(ff2(ff1(300))))
+
+	const fsum = compose(
+		ff1,
+		ff2,
+		ff3,
+		ff4
+	)
+	fsum(400)
+
+	/*
+	// functional.js example
+	var e = function (a) {
+		return "hello " + a;
+	};
+	var f = function (a) {
+		return a + 1;
+	};
+	var g = function (a) {
+		return a * 100;
+	};
+	var composed = fjs.compose(e, f, g);
+	composed(2); // => "hello 201"
+	*/
 </script>
 
 </body>

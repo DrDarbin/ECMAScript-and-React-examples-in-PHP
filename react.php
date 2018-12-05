@@ -10,6 +10,9 @@
 <div id="react-list-arr"></div>
 <div id="react-list-class"></div>
 <div id="react-list-class2"></div>
+<div id="react-fabric"></div>
+<div id="react-fabric2"></div>
+<div id="react-fabric3"></div>
 
 <!-- React libraries -->
 <script src="https://unpkg.com/react@15.4.2/dist/react.js"></script>
@@ -132,6 +135,56 @@
 		list_class2, 
 		document.getElementById('react-list-class2')
 	)
+
+/**
+ * Factory
+ * to create elements
+ **/
+	fabricList = React.DOM.ul(
+		{className: "fabric"},
+		React.DOM.li(null, "C1"),
+		React.DOM.li(null, "C2"),
+		React.DOM.li(null, "C3")
+	)
+	ReactDOM.render(fabricList, document.getElementById('react-fabric'))
+
+/**
+ * Factory with map-function
+ * to create elements
+ **/
+	var items = ["C91", "C92", "C93"]
+	fabricList2 = React.DOM.ul(
+		{className: "fabric2"},
+		items.map((ingredient, i) =>
+			React.DOM.li({key: i}, ingredient)
+		)
+	)
+	ReactDOM.render(fabricList2, document.getElementById('react-fabric2'))
+
+/**
+ * Custom Factory
+ * To simplify the code and use it as a function instead of createElement construction
+ **/
+	const {render} = ReactDOM
+	
+	var arr3 = ["D1", "D2", "D3"]
+
+	const ingredientList = ({arr3}) =>
+		React.createElement(
+			'ul',
+			{className: "factory"},
+			arr3.map((ingredient, i) =>
+				React.createElement('li', {key: i}, ingredient)
+			)
+		)
+	
+	const igredientsFunc = React.createFactory( ingredientList )
+
+	render(
+		ingredientList({arr3}),
+		document.getElementById('react-fabric3')
+	)
+
 </script>
 </body>
 </html>

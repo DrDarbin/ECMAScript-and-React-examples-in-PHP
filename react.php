@@ -13,10 +13,14 @@
 <div id="react-fabric"></div>
 <div id="react-fabric2"></div>
 <div id="react-fabric3"></div>
+<div id="jsx-1"></div>
 
 <!-- React libraries -->
 <script src="https://unpkg.com/react@15.4.2/dist/react.js"></script>
 <script src="https://unpkg.com/react-dom@15.4.2/dist/react-dom.js"></script>
+
+<!-- Babel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.29/browser.js"></script>
 
 <!-- https://reactjs.org/docs/cdn-links.html -->
 <!-- React 16 for development -->
@@ -184,7 +188,29 @@
 		ingredientList({arr3}),
 		document.getElementById('react-fabric3')
 	)
-
 </script>
+
+<!--
+ - JSX
+ - Babel
+ -->
+	<script type="text/babel">
+/**
+ * JSX
+ * It looks like creating custom <XYZ atr="abc"> functions 
+ * with "atr" atributes, we can put arrays there also
+ **/
+		const Menu = ({title}) =>
+			<article>
+				<header>
+					<h1>{title}</h1>
+				</header>
+			</article>
+		
+		ReactDOM.render(
+			<Menu title="JSX-example-1" />,
+			document.getElementById('jsx-1')
+		)
+	</script>
 </body>
 </html>

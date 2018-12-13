@@ -15,6 +15,9 @@
 <div id="react-fabric3"></div>
 <div id="jsx-1"></div>
 
+<h2>- properties-and-defaults</h2>
+<div id="properties-and-defaults"></div>
+
 <!-- React libraries -->
 <script src="https://unpkg.com/react@15.4.2/dist/react.js"></script>
 <script src="https://unpkg.com/react-dom@15.4.2/dist/react-dom.js"></script>
@@ -211,6 +214,65 @@
 			<Menu title="JSX-example-1" />,
 			document.getElementById('jsx-1')
 		)
+/**
+ * Variable types and properties required
+ * Default values
+ *
+ * Example: Check if the var is array, for instance
+ * probably we need to install prop-types first, otherwise we will get an error
+ * "propTypes is not defined"
+ * https://stackoverflow.com/questions/45692537/proptypes-is-not-defined
+ **/
+	const Summary = React.createClass({
+		displayName: "Summary",
+		propTypes: {
+			title: PropTypes.string.isRequired,
+			ingredients: PropTypes.array.isRequired,
+			steps: PropTypes.array.isRequired
+		},
+		/* 
+		// or we can use this to show default properties
+		getDefaultProps(){
+			return {
+				ingredients: 0,
+				steps: 0,
+				title: "[recipe]"
+			}
+		}*/
+		render() {
+			const {title, ingredients, steps} = this.props
+			return (
+				<div className="Summary">
+					<h1>{title}</h1>
+					<p>
+						<span>{ingredients.length} Ingredients | </span>
+						<span>{steps.length} Steps</span>
+					</p>
+				</div>
+			)
+		}
+	})
+
+	ReactDOM.render(
+		<Summary	title = "Summary"
+					ingredients = "a, b, c"
+					steps = "x, y, z"/>,
+		document.getElementById('properties-and-defaults')
+	)
+/**
+ * Manual checking of properties
+ * Example: property is a string 20 symbols long
+ **/
+	propTypes: {
+		ingredients: PropTypes.array.isRequired,
+		steps: PropTypes.array.isRequired,
+		title: (props, propName) =>
+			(typeof props[propName] !== 'string') ?
+				new Error("A title must be a string") :
+				(props[propName].length > 20) ?
+					new Error("Title is over 20 characters") :
+					null
+	}
 	</script>
 </body>
 </html>
